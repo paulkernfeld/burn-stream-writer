@@ -1,0 +1,26 @@
+{
+  "name": "burn-stream-writer",
+  "version": "0.1.0",
+  "description": "Write to a burn-stream",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "keywords": [
+    "burn-stream",
+    "spv",
+    "bitcoin",
+    "burn"
+  ],
+  "author": "Paul Kernfeld",
+  "license": "ISC",
+  "devDependencies": {
+    "standard": "^6.0.5"
+  },
+  "dependencies": {
+    "bitcoin": "^3.0.1",
+    "bitcore-lib": "^0.13.13",
+    "minimist": "^1.2.0",
+    "prompt": "^1.0.0"
+  }
+}
