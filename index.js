@@ -53,9 +53,13 @@ Writer.prototype.createTx = function (opts, cb) {
 
   self.client.getRawChangeAddress(function (err, changeAddress) {
     assert.ifError(err)
-    transaction.change(changeAddress)
+
+    if (opts.changeAddress) {
+      changeAddress = opts.changeAddress
+    }
 
     debug('change address', changeAddress)
+    transaction.change(changeAddress)
 
     debug('fee', transaction.getFee())
     debug('tx unsigned', transaction)
