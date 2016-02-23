@@ -8,6 +8,9 @@ var Script = require('bitcore-lib').Script
 var Transaction = require('bitcore-lib').Transaction
 global._bitcore = undefined
 
+// This should be higher than the dust amount.
+var MIN_AMOUNT = 10000
+
 function Writer (clientConfig, appConfig) {
   if (!(this instanceof Writer)) return new Writer(clientConfig, appConfig)
 
@@ -37,9 +40,11 @@ Writer.prototype.createTx = function (opts, cb) {
     script: opReturnScript
   })
 
+  var amount = opts.amount === 'min' ? MIN_AMOUNT : opts.amount
+
   var transaction = new Transaction()
     .from(opts.utxos)
-    .to(self.appConfig.burnAddress, opts.amount)
+    .to(self.appConfig.burnAddress, amount)
     .addOutput(output)
 
   if (opts.fee) {
