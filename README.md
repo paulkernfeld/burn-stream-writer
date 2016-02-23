@@ -17,6 +17,14 @@ Usage
 }
 ```
 
-To write from the command line, run `bin/write.js`.
+To write from the command line, run `bin/write.js`. It will ask for confirmation before writing. An example command:
+
+```
+node bin/write.js \
+    --clientConfig client-config.json \
+    --appConfig example-config.json \
+    --amount 100000 \
+    --message sup
+```
 
 To write from Javascript code, you can require burn-stream-writer (see `bin/write.js` for an example).
