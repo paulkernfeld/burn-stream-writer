@@ -1,8 +1,12 @@
 var assert = require('assert')
 var bitcoin = require('bitcoin')
 var debug = require('debug')('burn-stream-writer')
+
+// Workaround for https://github.com/bitpay/bitcore-lib/issues/21
+global._bitcore = undefined
 var Script = require('bitcore-lib').Script
 var Transaction = require('bitcore-lib').Transaction
+global._bitcore = undefined
 
 function Writer (clientConfig, appConfig) {
   if (!(this instanceof Writer)) return new Writer(clientConfig, appConfig)
