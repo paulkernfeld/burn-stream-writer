@@ -28,20 +28,25 @@ console.log('OP_RETURN prefix hex', appConfig.opReturnPrefix)
 // Write
 var writer = Writer(clientConfig, appConfig)
 
-writer.make(opts, function (err, tx) {
+writer.getUtxos(function (err, utxos) {
   assert.ifError(err)
 
-  console.log('send tx? y/n')
-  prompt.get(['write'], function (err, result) {
+  opts.utxos = utxos
+  writer.createTx(opts, function (err, tx) {
     assert.ifError(err)
 
-    if (result.write === 'y') {
-      writer.send(tx.hex, function (err) {
-        assert.ifError(err)
-        console.log('write submitted successfully')
-      })
-    } else {
-      console.log('not sending')
-    }
+    console.log('send tx? y/n')
+    prompt.get(['write'], function (err, result) {
+      assert.ifError(err)
+
+      if (result.write === 'y') {
+        writer.send(tx.hex, function (err) {
+          assert.ifError(err)
+          console.log('write submitted successfully')
+        })
+      } else {
+        console.log('not sending')
+      }
+    })
   })
 })

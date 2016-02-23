@@ -17,46 +17,47 @@ function Writer (clientConfig, appConfig) {
   debug('new writer', clientConfig, appConfig)
 }
 
-Writer.prototype.make = function (opts, cb) {
+Writer.prototype.getUtxos = function (cb) {
+  this.client.listUnspent(cb)
+}
+
+Writer.prototype.createTx = function (opts, cb) {
   var self = this
 
-  self.client.listUnspent(function (err, utxos) {
+  debug('# of utxos', opts.utxos.length)
+
+  var messageBuffer = Buffer(self.appConfig.opReturnPrefix + opts.message, 'hex')
+  assert(messageBuffer.length <= 80)
+
+  var opReturnScript = Script.buildDataOut(messageBuffer)
+  debug('script', opReturnScript)
+
+  var output = new Transaction.Output({
+    satoshis: 0,
+    script: opReturnScript
+  })
+
+  var transaction = new Transaction()
+    .from(opts.utxos)
+    .to(self.appConfig.burnAddress, opts.amount)
+    .addOutput(output)
+
+  if (opts.fee) {
+    transaction.fee(opts.fee)
+  }
+
+  self.client.getRawChangeAddress(function (err, changeAddress) {
     assert.ifError(err)
-    debug('# of utxos', utxos.length)
+    transaction.change(changeAddress)
 
-    var messageBuffer = Buffer(self.appConfig.opReturnPrefix + opts.message, 'hex')
-    assert(messageBuffer.length <= 80)
+    debug('change address', changeAddress)
 
-    var opReturnScript = Script.buildDataOut(messageBuffer)
-    debug('script', opReturnScript)
+    debug('fee', transaction.getFee())
+    debug('tx unsigned', transaction)
 
-    var output = new Transaction.Output({
-      satoshis: 0,
-      script: opReturnScript
-    })
-
-    var transaction = new Transaction()
-      .from(utxos)
-      .to(self.appConfig.burnAddress, opts.amount)
-      .addOutput(output)
-
-    if (opts.fee) {
-      transaction.fee(opts.fee)
-    }
-
-    self.client.getRawChangeAddress(function (err, changeAddress) {
+    self.client.signRawTransaction(transaction.toBuffer().toString('hex'), function (err, signed) {
       assert.ifError(err)
-      transaction.change(changeAddress)
-
-      debug('change address', changeAddress)
-
-      debug('fee', transaction.getFee())
-      debug('tx unsigned', transaction)
-
-      self.client.signRawTransaction(transaction.toBuffer().toString('hex'), function (err, signed) {
-        assert.ifError(err)
-        cb(null, signed)
-      })
+      cb(null, signed)
     })
   })
 }
