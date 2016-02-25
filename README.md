@@ -20,11 +20,15 @@ Usage
 To write from the command line, run `bin/write.js`. It will ask for confirmation before writing. An example command:
 
 ```
-node bin/write.js \
-    --clientConfig client-config.json \
-    --appConfig example-config.json \
-    --amount 100000 \
-    --message sup
+node bin/write.js --amount 100000 --message sup
 ```
+
+About the args:
+
+* `--clientConfig` defaults to `client-config.json`
+* `--appConfig` defaults to `app-config.json`
+* You can set `--fee` to specify a fee
+* You can set `--changeAddress` to specify a change address
+* You can set `--amount min` to send the minimum allowed amount
 
 To write from Javascript code, you can require burn-stream-writer (see `bin/write.js` for an example).
