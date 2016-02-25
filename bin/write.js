@@ -24,6 +24,7 @@ console.log('message utf8', message.toString('utf8'))
 
 console.log('burn address', appConfig.burnAddress)
 console.log('OP_RETURN prefix hex', appConfig.opReturnPrefix)
+console.log('OP_RETURN prefix utf8', Buffer(appConfig.opReturnPrefix, 'hex').toString('utf8'))
 
 // Write
 var writer = Writer(clientConfig, appConfig)
