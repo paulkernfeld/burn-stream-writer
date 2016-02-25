@@ -62,7 +62,7 @@ Writer.prototype.createTx = function (opts, cb) {
     transaction.change(changeAddress)
 
     debug('fee', transaction.getFee())
-    debug('tx unsigned', transaction.toObject())
+    console.log('tx unsigned', transaction.toObject())
 
     self.client.signRawTransaction(transaction.toBuffer().toString('hex'), function (err, signed) {
       assert.ifError(err)
