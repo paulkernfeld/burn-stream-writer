@@ -8,8 +8,8 @@ var Writer = require('..')
 var opts = JSON.parse(JSON.stringify(argv))
 
 // Load configuration from files
-var appConfig = JSON.parse(fs.readFileSync(argv.appConfig))
-var clientConfig = JSON.parse(fs.readFileSync(argv.clientConfig))
+var appConfig = JSON.parse(fs.readFileSync(argv.appConfig || 'app-config.json'))
+var clientConfig = JSON.parse(fs.readFileSync(argv.clientConfig || 'client-config.json'))
 prompt.start()
 
 // Convert the message for binary reading
