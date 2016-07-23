@@ -15,7 +15,7 @@
   "author": "Paul Kernfeld",
   "license": "ISC",
   "devDependencies": {
-    "standard": "^6.0.5"
+    "standard": "^7.1.2"
   },
   "dependencies": {
     "bitcoin": "^3.0.1",
