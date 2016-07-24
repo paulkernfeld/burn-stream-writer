@@ -1,5 +1,7 @@
 Burn-stream-writer lets you write to a [burn-stream](https://github.com/paulkernfeld/burn-stream).
 
+[![Build Status](https://travis-ci.org/paulkernfeld/burn-stream-writer.svg)](https://travis-ci.org/paulkernfeld/burn-stream-writer) [![npm](https://img.shields.io/npm/dt/burn-stream-writer.svg)](https://www.npmjs.com/package/burn-stream-writer)
+
 Burn-stream-writer writes to a burn-stream by connecting to a Bitcoin client over [RPC](https://en.bitcoin.it/wiki/API_reference_(JSON-RPC)).
 
 Usage
